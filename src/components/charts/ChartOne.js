@@ -1,119 +1,73 @@
-import React, {useState} from "react";
-import {VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryTooltip} from "victory";
-import {Slider, Box} from "@mui/material";
-import chart_one from "../../../data/chart_one";
+import React, {useState, useEffect} from "react";
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label} from "recharts";
+import {csv} from "d3-fetch";
 
-// Example color array (add more colors as needed)
-const colors = [
-    "#ebf4fd99",
-    "#1c8e3e99",
-    "#ebf4fd99",
-    "#ffce3e99",
-    "#f5f5f599",
-    "#4aae3599",
-    "#2b9e8b99",
-    "#a3357199",
-    "#1f5eaa99",
-    "#c11c2599",
-];
+const ChartOne = () => {
+    const [ data, setData ] = useState([]);
+    const [ selectedPlatforms, setSelectedPlatforms ] = useState([ "Facebook", "Instagram", "Linkedin", "Snapchat" ]);
 
-const customTooltipStyles = {
-    style: {fontSize: 6, fill: "black"}, // Text styling
-    flyoutStyle: {
-        stroke: "#6babf2",
-        strokeWidth: 1,
-        fill: "white", // Background color of the tooltip
-    },
-};
+    useEffect(() => {
+        // Load data from CSV
+        csv("/data/device_platform_percent.csv").then((data) => {
+            setData(
+                data.map((d) => ({
+                    SegmentType: d["Segment Type"],
+                    Facebook: +d.Facebook,
+                    Instagram: +d.Instagram,
+                    Linkedin: +d.Linkedin,
+                    Snapchat: +d.Snapchat,
+                }))
+            );
+        });
+    }, []);
 
-const EducationChart = () => {
-    const [ selectedIndex, setSelectedIndex ] = useState(0);
-    const isValidIndex = selectedIndex >= 0 && selectedIndex < chart_one.length;
-    const selectedData = isValidIndex
-        ? Object.entries(chart_one[selectedIndex])
-          .filter(([ key, _ ]) => key !== "Educational Achievement")
-          .map(([ key, value ], index) => ({
-              y: key,
-              x: value,
-              color: colors[index % colors.length],
-          }))
-          .sort((a, b) => b.x - a.x)
-        : [];
+    if (data.length === 0) {
+        return <div>Loading...</div>;
+    }
 
-    const handleSliderChange = (event, newValue) => {
-        setSelectedIndex(newValue);
+    const platformColors = {
+
+        Snapchat: "#ffe45e", // Very light blue
+        Instagram: "#ff6b6b", // Light blue
+        Linkedin: "#7fc8f8", // Medium blue
+        Facebook: "#5aa9e6", // Dark blue
     };
 
     return (
-        <Box sx={{ padding: "0", paddingTop: '0px' }}>
-            <Slider
-                min={1}
-                max={chart_one.length - 1}
-                value={selectedIndex}
-                onChange={handleSliderChange}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                sx={{
-                    width: "100%",
-                     
-                    "& .MuiSlider-thumb": {
-                        color: "#6babf2", // Changes the thumb color
-                    },
-                    "& .MuiSlider-track": {
-                        color: "#6babf2", // Changes the track color
-                    },
-                    "& .MuiSlider-rail": {
-                        color: "#b2dffb", // Optionally changes the rail color to a lighter shade for contrast
-                    },
-                    "& .MuiSlider-mark": {
-                        color: "#6babf2", // Changes the mark color
-                    },
-                    "& .MuiSlider-markLabel": {
-                        color: "#6babf2", // Optionally changes the mark label color if you're using labels
-                    },
-                }}
-                marks={chart_one.map((_, index) => ({value: index}))}
-                step={null}
-            />
-            <div style={{margin: "0 0  30px",  }}>
-                {isValidIndex
-                    ? `Viewing data for: ${chart_one[selectedIndex]["Educational Achievement"]}`
-                    : "Please select a valid entry."}
-            </div>
-            <VictoryChart
-                domainPadding={20}
-                theme={VictoryTheme.material}
-                animate={{duration: 500}}
-                style={{parent: {border: "0px solid #ccc"}}}
-                padding={{left: 80, bottom: 20, right:10}} // Adjust left padding as needed
+        <div style={{height: "100%", maxWidth: "auto", display: "flex", flexDirection: "column", alignItems: "left"}}>
+            <div
+                style={{height: "100%", maxWidth: "auto", display: "flex", flexDirection: "column", alignItems: "left"}}
             >
-                <VictoryAxis
-                    dependentAxis
-                    tickLabelComponent={<VictoryLabel angle={0} />}
-                    style={{tickLabels: {fontSize: 6, padding: 5}}}
-                />
-                <VictoryAxis style={{tickLabels: {fontSize: 6, padding: 5}}} />
-                <VictoryBar
-                    data={selectedData}
-                    horizontal
-                    x="y"
-                    y="x"
-                    style={{
-                        data: {fill: ({datum}) => datum.color}, // Use color from each datum
-                    }}
-                    labels={({datum}) => `${datum.y}: ${datum.x}`}
-                    labelComponent={
-                        <VictoryTooltip
-                            {...customTooltipStyles}
-                            cornerRadius={5} // Adjust for rounded corners
-                            pointerLength={5} // Adjust pointer length
-                        />
-                    }
-                />
-            </VictoryChart>
-            
-        </Box>
+                <div style={{marginBottom: "20px", minWidth: "100%", display: "flex"}}>
+                    {selectedPlatforms.map((platform, index) => (
+                        <div key={platform} style={{display: "flex", alignItems: "center", marginRight: "20px"}}>
+                            <div
+                                style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    backgroundColor: platformColors[platform],
+                                    marginRight: "5px",
+                                }}
+                            ></div>
+                            <span>{platform}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <BarChart width={700} height={500} data={data} margin={{top: 20, right: 0, left: 2, bottom: 0}}>
+                <CartesianGrid strokeDasharray="0 0" />
+                <XAxis dataKey="SegmentType" />
+                <YAxis>
+                    <Label value="Percentage" angle={-90} position="insideLeft" style={{textAnchor: "middle"}} />
+                </YAxis>
+                <Tooltip />
+                {selectedPlatforms.map((platform) => (
+                    <Bar key={platform} dataKey={platform} stackId="a" fill={platformColors[platform]} />
+                ))}
+            </BarChart>
+        </div>
     );
 };
 
-export default EducationChart;
+export default ChartOne;
