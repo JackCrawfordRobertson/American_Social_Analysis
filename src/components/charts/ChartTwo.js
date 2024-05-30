@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer } from "recharts";
 import { csv } from "d3-fetch";
 
-const ChartOne = () => {
+const ChartTwo = () => {
     const [data, setData] = useState([]);
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Facebook", "Instagram", "Linkedin", "Snapchat"]);
 
     useEffect(() => {
         // Load data from CSV
-        csv("/data/device_platform_percent.csv").then((data) => {
+        csv("/data/household_income_percent.csv").then((data) => {
             setData(
                 data.map((d) => ({
-                    SegmentType: d["Segment Type"],
+                    SegmentDescription: d["Segment Description"],
                     Facebook: +d.Facebook,
                     Instagram: +d.Instagram,
                     Linkedin: +d.Linkedin,
@@ -57,27 +57,29 @@ const ChartOne = () => {
             </div>
 
             <ResponsiveContainer width="100%" height={500}>
-                <BarChart data={data} margin={{ top: 10, right: 0, left: 2, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="0 0" />
-                    <XAxis dataKey="SegmentType" />
+                <AreaChart data={data} margin={{ top: 0, right: 40, left: 5, bottom: -30 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="SegmentDescription" tick={{ angle: 0, textAnchor: "middle" }} interval={0} height={60} />
                     <YAxis>
                         <Label value="Percentage" angle={-90} position="insideLeft" style={{ textAnchor: "middle" }} />
                     </YAxis>
                     <Tooltip />
                     {selectedPlatforms.map((platform) => (
-                        <Bar
+                        <Area
                             key={platform}
+                            type="monotone"
                             dataKey={platform}
-                            stackId="a"
+                            stackId="1"
+                            stroke={platformColors[platform]}
                             fill={platformColors[platform]}
-                            fillOpacity={0.7} // Add opacity to the bars
+                            fillOpacity={0.7} // Add opacity to the areas
                             isAnimationActive={true} // Enable animation
                         />
                     ))}
-                </BarChart>
+                </AreaChart>
             </ResponsiveContainer>
         </div>
     );
 };
 
-export default ChartOne;
+export default ChartTwo;

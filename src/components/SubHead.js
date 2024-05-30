@@ -1,12 +1,11 @@
-// components/SubHead.js
-
 import React from 'react';
+import styles from '../../styles/SubHead.module.css';
 
 const SubHead = ({ sectionNumber, title }) => {
     return (
-        <div style={{ marginTop: '40px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
-            <h2 style={{ margin: '0', color: '#95a5a6' }}>Level {sectionNumber}:</h2>
-            <h2 style={{ margin: '0 0 0 5px', color: '#333' }}> {title}</h2>
+        <div className={styles.subheadContainer}>
+            <h2 className={styles.subheadLevel}>Level {sectionNumber}:</h2>
+            <h2 className={styles.subheadTitle}>{title}</h2>
         </div>
     );
 };

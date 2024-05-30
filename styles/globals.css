@@ -1,7 +1,12 @@
 body, button, input, textarea {
-  font-family: "Proxima Nova",sans-serif!important; 
+  font-family: "Inter", sans-serif!important; 
   width: 100vw;
+  height: auto;
   background-color: #ffffff;
   padding: 0;
   margin: 0;
+}
+
+html, body {
+  overflow-x: hidden; /* Disable scrolling */
 }
