@@ -8,18 +8,17 @@ function MyApp({ Component, pageProps }) {
         {/* Essential metadata tags */}
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Explore the candidate case study task" />
-        <meta name="keywords" content="your, keywords, here" />
+        <meta name="description" content="Analysing social media usage in the context of university protests." />
+        <meta name="keywords" content="social media, university protests, Snapchat, Instagram, Facebook, LinkedIn, household income, religious orientation, device type, university trends" />
 
         <link rel="icon" href="/logo.svg" />
       
-        <meta property="og:title" content="JackXFocaldata" />
-        <meta property="og:description" content="Explore the candidate case study task" />
+        <meta property="og:title" content="Social Media Usage in University Protests" />
+        <meta property="og:description" content="Analyzing social media usage in the context of university protests." />
         <meta property="og:image" content="/logo.svg" />
-        <meta property="og:url" content="https://focaldata.jack-robertson.co.uk/" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:url" content="https://university-protests.jack-robertson.co.uk" />
 
-      
+        <meta property="og:type" content="article" />
       </Head>
       <Component {...pageProps} />
     </>
