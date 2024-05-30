@@ -3,10 +3,18 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 
 // Dynamic Imports for Charts
-import ChartOne from "../src/components/charts/ChartOne";
-import ChartTwo from "../src/components/charts/ChartTwo";
-import ChartThree from "../src/components/charts/ChartThree";
-import ChartFour from "../src/components/charts/ChartFour";
+const ChartOne = dynamic(() => import("../src/components/charts/ChartOne"), {
+    ssr: false,
+  });
+  const ChartTwo = dynamic(() => import("../src/components/charts/ChartTwo"), {
+    ssr: false,
+  });
+  const ChartThree = dynamic(() => import("../src/components/charts/ChartThree"), {
+    ssr: false,
+  });
+  const ChartFour = dynamic(() => import("../src/components/charts/ChartFour"), {
+    ssr: false,
+  });
 
 //Comps
 import BodyCopy from "../src/components/BodyCopy";
