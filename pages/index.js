@@ -91,8 +91,9 @@ This data not only tracks which platforms are most favored but also considers th
                     <div style={{backgroundColor: "#33333330", width: "auto", height: "2px"}}></div>
 
                     <SubHead sectionNumber="" title="Conclusion" />
+                    
+                    <BodyCopy htmlText="In summary, these insights are pivotal for understanding how students communicate and organize, especially in the context of ongoing protests related to the Gaza War. The scarcity of data from social media companies on usage patterns creates an information void, leaving us vulnerable to their algorithmic influences. Leveraging community-collected data like this can map personal viewing trends, potentially leading to a deeper understanding of the underlying mechanisms of the social media platforms we all use." />
 
-                    <BodyCopy htmlText="In summary, this analysis reveals historical usage patterns on social media platforms based on device type, household income, religious orientation, and university affiliation across the United States education system. These insights are vital for understanding how students communicate and organise, especially in the context of the ongoing protests related to the Gaza War. The scarcity of data from social media companies on usage numbers creates an informational vacuum, leaving us ill-informed and vulnerable to the algorithmic mechanisms these companies employ. By leveraging community-collected data like the one presented here, we can begin to map personal viewing trends. This approach will hopefully lead to a deeper understanding of the mechanics behind so-called shadow banning." />
                 </div>
             </div>
             <Footer />
