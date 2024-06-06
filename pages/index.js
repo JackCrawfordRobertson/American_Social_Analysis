@@ -34,7 +34,7 @@ const Home = () => {
                     <h3 className={styles.date}>31 May, 2024</h3>
 
                     <BodyCopy
-                        htmlText="With protests and demonstrations taking place in universities across the United States in response to Israel's war on Gaza following the 7th October attacks, what role has social media played in the coordination and communication of student activities across the United States? <br /><br />
+                        htmlText="With protests and demonstrations taking place in universities across the United States in response to Israel's war on Gaza following the 7th October attacks, what role has social media played in the coordination and communication of student activism across the United States? <br /><br />
     Intrigued by this idea, I decided to delve deeper into the role of social media usage in US universities."
                     />
 
