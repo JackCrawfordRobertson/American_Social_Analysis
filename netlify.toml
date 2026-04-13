@@ -1,0 +1,6 @@
+[build]
+  command = "corepack enable && yarn build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
